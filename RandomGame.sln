@@ -3,9 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.30114.105
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RandomGame", "RandomGame\RandomGame.csproj", "{1D37992F-4938-4DFB-905D-77F211B3A0FF}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RandomGameSkill", "RandomGameSkill\RandomGameSkill.csproj", "{1D37992F-4938-4DFB-905D-77F211B3A0FF}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RandomGame.Tests", "RandomGame.Tests\RandomGame.Tests.csproj", "{7389BEC8-5B32-4CB0-8190-BAB65368433F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RandomGame.Tests", "RandomGameSkill.Tests\RandomGameSkill.Tests.csproj", "{7389BEC8-5B32-4CB0-8190-BAB65368433F}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

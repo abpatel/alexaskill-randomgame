@@ -10,7 +10,7 @@ using Amazon.Lambda.TestUtilities;
 using Amazon.DynamoDBv2;
 using Amazon.DynamoDBv2.Model;
 using RandomGame;
-using NumberGameSkill;
+using RandomGameSkill;
 
 namespace RandomGame.Tests
 {
@@ -40,7 +40,7 @@ namespace RandomGame.Tests
 
 
             var context = new TestLambdaContext();
-            var function = new NumberGameLambdaFunc();
+            var function = new RandomGameSkillLambdaFunc();
 
    //         function.FunctionHandler(evnt, context);
 

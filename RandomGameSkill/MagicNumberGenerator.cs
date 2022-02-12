@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace NumberGameSkill
+namespace RandomGameSkill
 {
     class MagicNumberGenerator
     {

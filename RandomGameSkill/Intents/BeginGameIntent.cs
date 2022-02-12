@@ -8,7 +8,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace NumberGameSkill.Intents
+namespace RandomGameSkill.Intents
 {
     class BeginGameIntent
     {

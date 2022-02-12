@@ -5,20 +5,23 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace NumberGameSkill.Intents
+namespace RandomGameSkill.Intents
 {
 
-    class CancelIntent
+    class HelpIntent
     {      
         private IntentContext context;
-        public CancelIntent(IntentContext context)
+        public HelpIntent(IntentContext context)
         {           
             this.context = context;
         }
 
         public SkillResponse Process()
         {
-            return ResponseBuilder.Tell("Goodbye!");
+            Reprompt rp = new Reprompt("What's next?");
+            return ResponseBuilder.Ask("Here's some help. What's next?",
+                rp,
+                context.Session);
         }
     }
 }

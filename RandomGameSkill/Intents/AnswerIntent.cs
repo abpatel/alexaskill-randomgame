@@ -6,7 +6,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace NumberGameSkill.Intents
+namespace RandomGameSkill.Intents
 {
     class AnswerIntent
     {

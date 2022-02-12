@@ -7,7 +7,7 @@ using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace NumberGameSkill.Repositories
+namespace RandomGameSkill.Repositories
 {
     class LeaderBoardRepo
     {

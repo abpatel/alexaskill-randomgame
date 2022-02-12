@@ -5,13 +5,13 @@ using Alexa.NET.Request;
 using Alexa.NET.Request.Type;
 using Alexa.NET.Response;
 using Amazon.Lambda.Core;
-using NumberGameSkill.Intents;
+using RandomGameSkill.Intents;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace NumberGameSkill
+namespace RandomGameSkill
 {
     class IntentResponseHandler
     {
