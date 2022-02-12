@@ -1,0 +1,28 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+    <GenerateRuntimeConfigurationFiles>true</GenerateRuntimeConfigurationFiles>
+    <AWSProjectType>Lambda</AWSProjectType>
+    <!-- This property makes the build directory similar to a publish directory and helps the AWS .NET Lambda Mock Test Tool find project dependencies. -->
+    <CopyLocalLockFileAssemblies>true</CopyLocalLockFileAssemblies>
+    <AssemblyName>NumberGameSkill</AssemblyName>
+    <RootNamespace>NumberGameSkill</RootNamespace>
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Remove="Function - Copy.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Remove="apl.txt" />
+    <None Remove="data.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="Alexa.NET" Version="1.19.0" />
+    <PackageReference Include="Alexa.NET.APL" Version="7.5.0" />
+    <PackageReference Include="Alexa.NET.Profile" Version="1.0.0" />
+    <PackageReference Include="Amazon.Lambda.Core" Version="2.1.0" />
+    <PackageReference Include="Amazon.Lambda.Serialization.Json" Version="2.0.0" />
+    <PackageReference Include="Amazon.Lambda.Serialization.SystemTextJson" Version="2.2.0" />
+    <PackageReference Include="Amazon.Lambda.DynamoDBEvents" Version="2.1.0" />
+    <PackageReference Include="AWSSDK.DynamoDBv2" Version="3.7.2.1" />
+  </ItemGroup>
+</Project>
