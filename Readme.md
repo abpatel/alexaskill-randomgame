@@ -14,12 +14,12 @@ establishes a link between the skill frontend and backend.
 
 The Leaderboard feature uses DynamoDB as a backend.
 
-##Model
+## Model
 Contains the Alexa "front end" model for this skill.
-##RandomGameSkill
+## RandomGameSkill
 The .NET core lambda backend logic containing the APL for reference and 
 the DynamoDb backend schema for recreating the Leaderboard table
-##RandomGameSkill.LeaderBaordSeeder
+## RandomGameSkill.LeaderBaordSeeder
 Console app to generate some seed data for the leaderboard
 
 **NOTE:** You will need to create a role (RandomGameLambdarole) in AWS IAM that contains the 
@@ -27,8 +27,8 @@ following permissions:
 - AWSLambdaBasicExecutionRole
 - AmazonDynamoDBFullAccess (ideally needs only read/write, need to revisit)
 
-Role description
-`
+**Role description**
+```
 {
     "Role": {
         "Path": "/",
@@ -56,10 +56,10 @@ Role description
         }
     }
 }
-`
+```
 
-Attached role policies
-`
+**Attached role policies**
+```
 {
     "AttachedPolicies": [
         {
@@ -72,7 +72,7 @@ Attached role policies
         }
     ]
 }
-`
+```
 Eventually the role creation and the DynamoDB table creation would belong in a 
 terraform template.
 
