@@ -19,11 +19,11 @@ Contains the Alexa "front end" model for this skill.
 ## RandomGameSkill
 The .NET core lambda backend logic containing the APL for reference and 
 the DynamoDb backend schema for recreating the Leaderboard table
-## RandomGameSkill.LeaderBaordSeeder
+## RandomGameSkill.LeaderBoardSeeder
 Console app to generate some seed data for the leaderboard
 
 **NOTE:** You will need to create a role (RandomGameLambdarole) in AWS IAM that contains the 
-following permissions:
+following permissions:  
 - AWSLambdaBasicExecutionRole
 - AmazonDynamoDBFullAccess (ideally needs only read/write, need to revisit)
 
