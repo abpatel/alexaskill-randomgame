@@ -1,0 +1,95 @@
+{
+    "Table": {
+        "AttributeDefinitions": [
+            {
+                "AttributeName": "Game",
+                "AttributeType": "S"
+            },
+            {
+                "AttributeName": "Score",
+                "AttributeType": "N"
+            },
+            {
+                "AttributeName": "Timestamp",
+                "AttributeType": "S"
+            },
+            {
+                "AttributeName": "Username",
+                "AttributeType": "S"
+            }
+        ],
+        "TableName": "Leaderboard",
+        "KeySchema": [
+            {
+                "AttributeName": "Username",
+                "KeyType": "HASH"
+            },
+            {
+                "AttributeName": "Game",
+                "KeyType": "RANGE"
+            }
+        ],
+        "TableStatus": "ACTIVE",
+        "CreationDateTime": "2022-01-23T17:32:31.226000-08:00",
+        "ProvisionedThroughput": {
+            "NumberOfDecreasesToday": 0,
+            "ReadCapacityUnits": 2,
+            "WriteCapacityUnits": 2
+        },
+        "TableSizeBytes": 0,
+        "ItemCount": 0,
+        "TableArn": "arn:aws:dynamodb:us-west-2:525655117169:table/Leaderboard",
+        "TableId": "091e6996-271f-4dca-9a9b-4df3c6a517ad",
+        "LocalSecondaryIndexes": [
+            {
+                "IndexName": "TimestampIndex",
+                "KeySchema": [
+                    {
+                        "AttributeName": "Username",
+                        "KeyType": "HASH"
+                    },
+                    {
+                        "AttributeName": "Timestamp",
+                        "KeyType": "RANGE"
+                    }
+                ],
+                "Projection": {
+                    "ProjectionType": "ALL"
+                },
+                "IndexSizeBytes": 0,
+                "ItemCount": 0,
+                "IndexArn": "arn:aws:dynamodb:us-west-2:525655117169:table/Leaderboard/index/TimestampIndex"
+            }
+        ],
+        "GlobalSecondaryIndexes": [
+            {
+                "IndexName": "Game-Score-index",
+                "KeySchema": [
+                    {
+                        "AttributeName": "Game",
+                        "KeyType": "HASH"
+                    },
+                    {
+                        "AttributeName": "Score",
+                        "KeyType": "RANGE"
+                    }
+                ],
+                "Projection": {
+                    "ProjectionType": "ALL"
+                },
+                "IndexStatus": "ACTIVE",
+                "ProvisionedThroughput": {
+                    "NumberOfDecreasesToday": 0,
+                    "ReadCapacityUnits": 2,
+                    "WriteCapacityUnits": 2
+                },
+                "IndexSizeBytes": 0,
+                "ItemCount": 0,
+                "IndexArn": "arn:aws:dynamodb:us-west-2:525655117169:table/Leaderboard/index/Game-Score-index"
+            }
+        ],
+        "TableClassSummary": {
+            "TableClass": "STANDARD"
+        }
+    }
+}
