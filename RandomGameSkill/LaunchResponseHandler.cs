@@ -11,26 +11,25 @@ namespace RandomGameSkill
 {
     class LaunchResponseHandler
     {
-        private SkillRequest request;
-        private const string LAUNCH_DOC = "doc://alexa/apl/documents/launchDocument.json";
+        private SkillRequest request; 
         public LaunchResponseHandler(SkillRequest request)
         {
             this.request = request;
         }
         internal SkillResponse Handle()
         {
-            string speech = "Welcome! Say new game to start";
-            Reprompt rp = new Reprompt("Say new game to start");
+            string speech = "Welcome! You can either say new game or say show leaderboard. Which would you like?";
+            Reprompt rp = new Reprompt("You can say, new game, or leaderboard, which would you like?");
             var response = ResponseBuilder.Ask(speech, rp, request.Session);
             if (request.APLSupported())
             {
                 var launchDirective =
                     new RenderDocumentDirective(new
-                    APLDocumentLink(LAUNCH_DOC)
+                    APLDocumentLink(Constants.APL_LAUNCH_DOC)
                     );
                 launchDirective.DataSources = new Dictionary<string, APLDataSource>()
                     {
-                        { "textToSet",
+                        {  Constants.LABEL_APL_LAUNCHDOC_DATASOURCE_NAME,
                             new KeyValueDataSource
                             {
                                 Properties = new Dictionary<string, object>()

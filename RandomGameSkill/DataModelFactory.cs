@@ -7,12 +7,11 @@ using System.Text;
 
 namespace RandomGameSkill
 {
-
     class DataModelFactory
     {
         private static int[] GetGuesses(Session session)
         {
-            int[] guesses = session.GetValue<string>("all_guesses")
+            int[] guesses = session.GetValue<string>(Constants.SESSION_VAR_ALL_GUESSES)
                 .Split(",", StringSplitOptions.RemoveEmptyEntries)
                 .Select(i => int.Parse(i))
                 .ToArray();
@@ -21,14 +20,14 @@ namespace RandomGameSkill
         internal static AnswerDataModel CreateAnswerDataModel(IntentRequest intentRequest, 
             Session session)
         {
-            string userAnswerStr = intentRequest.Intent.Slots["number"].Value;
+            string userAnswerStr = intentRequest.Intent.Slots[Constants.INTENT_SLOT_NUMBER].Value;
             var model = new AnswerDataModel
             {
                 CurrentGuess =   Convert.ToInt32(long.Parse(userAnswerStr)),
-                MagicNumber = session.GetValue<int>("magic_number"),
-                NumGuesses = session.GetValue<int>("num_guesses"),
+                MagicNumber = session.GetValue<int>(Constants.SESSION_VAR_MAGIC_NUMBER),
+                NumGuesses = session.GetValue<int>(Constants.SESSION_VAR_NUM_GUESSES),
                 AllGuesses  = GetGuesses(session),
-                UserName = session.GetValue<string>("username") 
+                UserName = session.GetValue<string>(Constants.SESSION_VAR_USERNAME) 
             };
             return model;
 
@@ -44,10 +43,10 @@ namespace RandomGameSkill
             var model = new AnswerDataModel
             {
                 CurrentGuess = Convert.ToInt32(long.Parse(itemSelectedText)),
-                MagicNumber = session.GetValue<int>("magic_number"),
-                NumGuesses = session.GetValue<int>("num_guesses"),
+                MagicNumber = session.GetValue<int>(Constants.SESSION_VAR_MAGIC_NUMBER),
+                NumGuesses = session.GetValue<int>(Constants.SESSION_VAR_NUM_GUESSES),
                 AllGuesses = GetGuesses(session),
-                UserName = session.GetValue<string>("username")
+                UserName = session.GetValue<string>(Constants.SESSION_VAR_USERNAME)
             };
             return model;
         }

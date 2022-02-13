@@ -4,6 +4,7 @@ using Alexa.NET.APL.DataSources;
 using Alexa.NET.Request;
 using Alexa.NET.Response;
 using Amazon.Lambda.Core;
+using RandomGameSkill.Repositories;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -14,12 +15,16 @@ namespace RandomGameSkill
     {
         private SkillRequest request;
         private readonly Bounds bounds;
+        private readonly LeaderBoardRepo repo;
         private readonly ILambdaLogger logger;
 
-        public UserEventResponseHandler(SkillRequest request, Bounds bounds, ILambdaLogger logger)
+        public UserEventResponseHandler(SkillRequest request, 
+            Bounds bounds,
+            ILambdaLogger logger)
         {
             this.request = request;
             this.bounds = bounds;
+            this.repo = new LeaderBoardRepo(logger);
             this.logger = logger;
         }
         internal SkillResponse Handle()
@@ -35,7 +40,8 @@ namespace RandomGameSkill
                 model, 
                 logger, 
                 request.APLSupported(),
-                bounds).Handle();
+                bounds,
+                repo).Handle();
             logger?.LogLine($"Exiting {nameof(UserEventResponseHandler.Handle)}");
             return answerResponse;
         }

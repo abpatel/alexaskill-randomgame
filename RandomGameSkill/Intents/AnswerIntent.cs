@@ -11,7 +11,6 @@ namespace RandomGameSkill.Intents
     class AnswerIntent
     {
         const string INTENT_NAME = "AnswerIntent";
-        const string ANSWER_DOC = "doc://alexa/apl/documents/answerdocument.json";
         private IntentContext context;
         private readonly Bounds bounds; 
 
@@ -24,13 +23,7 @@ namespace RandomGameSkill.Intents
             this.context = context;
             this.bounds = bounds;
         }
-
-        private void AddSessionVariable(string name, object value)
-        {
-            context.Session.Attributes[name] = value;
-        }
-
-        
+                
         public SkillResponse Process()
         {
             context.Logger?.LogLine($"Entered {nameof(AnswerIntent)}:");
@@ -39,7 +32,8 @@ namespace RandomGameSkill.Intents
                 model, 
                 context.Logger, 
                 context.IsAPLSupported,
-                bounds).Handle();
+                bounds,
+                context.LeaderBoardRepo).Handle();
             context.Logger?.LogLine($"Exiting {nameof(AnswerIntent)}");
             return answerResponse;
 

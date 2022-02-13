@@ -13,9 +13,6 @@ namespace RandomGameSkill.Intents
     class BeginGameIntent
     {
         const string INTENT_NAME = "BeginGameIntent";
-        const string ANSWER_DOC = "doc://alexa/apl/documents/answerdocument.json";
-        const string ANSWER_DOC_TOKEN = "answerdoctoken";
-        const string DYNAMIC_INDEX_LIST_ID = "numbersDynamicList";
 
         private IntentContext context;
         private readonly MagicNumberGenerator generator;
@@ -50,12 +47,13 @@ namespace RandomGameSkill.Intents
         }
         private APLDataSource CreateDataSource()
         {
+            //ref: https://developer.amazon.com/en-US/docs/alexa/alexa-presentation-language/apl-data-source.html#use-directives-and-requests-to-manage-the-list
             var dataSource = new DynamicIndexList
             {
                 StartIndex = generator.Low,
                 MinimumInclusiveIndex = generator.Low,
-                MaximumExclusiveIndex = generator.High,
-                ListId = DYNAMIC_INDEX_LIST_ID,
+                MaximumExclusiveIndex = generator.High + 1,
+                ListId = Constants.DYNAMIC_INDEX_LIST_ID,
                 Items = GenerateDataSourceItems()
             };
             return dataSource;
@@ -63,12 +61,12 @@ namespace RandomGameSkill.Intents
         public SkillResponse Process()
         {
             context.Logger?.LogLine($"Entered {nameof(BeginGameIntent)}:");
-            string userName = context.Request.Intent.Slots["username"].Value;
-            AddSessionVariable("username", userName);
-            AddSessionVariable("num_guesses", 0);
-            AddSessionVariable("all_guesses", "");
+            string userName = context.Request.Intent.Slots[Constants.INTENT_SLOT_USERNAME].Value;
+            AddSessionVariable(Constants.SESSION_VAR_USERNAME, userName);
+            AddSessionVariable(Constants.SESSION_VAR_NUM_GUESSES, 0);
+            AddSessionVariable(Constants.SESSION_VAR_ALL_GUESSES, "");
             int magicNumber = generator.Generate();
-            AddSessionVariable("magic_number", magicNumber);
+            AddSessionVariable(Constants.SESSION_VAR_MAGIC_NUMBER, magicNumber);
             string next = $"OK {userName}, Let's begin. Guess a number betwen {generator.Low} and {generator.High}";
             Reprompt rp = new Reprompt(next);
             var response = ResponseBuilder.Ask(next, rp, context.Session);
@@ -76,32 +74,21 @@ namespace RandomGameSkill.Intents
             {
 
                 var launchDirective =
-                    new RenderDocumentDirective(new APLDocumentLink(ANSWER_DOC));
-                launchDirective.Token = ANSWER_DOC_TOKEN;
+                    new RenderDocumentDirective(new APLDocumentLink(Constants.APL_ANSWER_DOC));
+                launchDirective.Token = Constants.ANSWER_DOC_TOKEN;
                 launchDirective.DataSources = new Dictionary<string, APLDataSource>()
                                 {
                                     {
-                                        "gridListData",
-                                         new KeyValueDataSource
-                                        {
-                                            Properties = new Dictionary<string, object>()
-                                            {
-                                                {
-                                                    "listItemsToShow",
-                                                    Enumerable.Range(generator.Low, generator.High)
-                                                    .Select(item =>
-                                                     new { listItemText = item, disabled = false
-                                                     }).ToArray()
-                                                }
-                                            }
-                                        }
-                                        //new ObjectDataSource
+                                        Constants.LABEL_APL_ANSWERDOC_DATASOURCE_GRIDLIST_NAME,
+                                        CreateDataSource()
+                                        // new KeyValueDataSource
                                         //{
                                         //    Properties = new Dictionary<string, object>()
                                         //    {
                                         //        {
                                         //            "listItemsToShow",
-                                        //            Enumerable.Range(generator.Low, generator.High).Select(item =>
+                                        //            Enumerable.Range(generator.Low, generator.High)
+                                        //            .Select(item =>
                                         //             new { listItemText = item, disabled = false
                                         //             }).ToArray()
                                         //        }

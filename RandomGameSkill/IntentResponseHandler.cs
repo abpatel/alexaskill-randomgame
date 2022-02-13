@@ -6,6 +6,7 @@ using Alexa.NET.Request.Type;
 using Alexa.NET.Response;
 using Amazon.Lambda.Core;
 using RandomGameSkill.Intents;
+using RandomGameSkill.Repositories;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -18,13 +19,7 @@ namespace RandomGameSkill
         private SkillRequest skillRequest;
         private readonly Bounds bounds;
         private ILambdaLogger logger;
-        const string ANSWER_DOC_TOKEN = "answerdoctoken";
-        const string AMAZON_CANCEL_INTENT = "AMAZON.CancelIntent";
-        const string AMAZON_STOPINTENT = "AMAZON.StopIntent";
-        const string AMAZON_HELPINTENT = "AMAZON.HelpIntent";
-        const string NEW_GAME_INTENT = "NewGameIntent";
-        const string BEGIN_GAME_INTENT = "BeginGameIntent";
-        const string ANSWER_INTENT = "AnswerIntent";
+       
         public IntentResponseHandler(SkillRequest skillRequest, Bounds bounds, ILambdaLogger logger)
         {
             this.skillRequest = skillRequest;
@@ -39,7 +34,8 @@ namespace RandomGameSkill
                 Session = skillRequest.Session,
                 Request = intentRequest,
                 IsAPLSupported = skillRequest.APLSupported(),
-                Logger = logger
+                Logger = logger,
+                LeaderBoardRepo = new LeaderBoardRepo(logger)
             };
             return context;
         }
@@ -53,32 +49,37 @@ namespace RandomGameSkill
                 var context = GetContext(intentRequest);
                 switch (intentRequest.Intent.Name)
                 {                   
-                    case AMAZON_CANCEL_INTENT:
+                    case Constants.INTENT_AMAZON_CANCEL_INTENT:
                         {
                             var response = new CancelIntent(context).Process();
                             return response;
                         }
-                    case AMAZON_STOPINTENT:
+                    case Constants.INTENT_AMAZON_STOPINTENT:
                         return ResponseBuilder.Tell("Goodbye!");
-                    case AMAZON_HELPINTENT:
+                    case Constants.INTENT_AMAZON_HELPINTENT:
                         {
                             var response = new HelpIntent(context).Process();
                             return response;
                         }
-                    case NEW_GAME_INTENT:
+                    case Constants.INTENT_CUSTOM_NEW_GAME_INTENT:
                         {
                             var response = new NewGameIntent(context).Process();
                             return response;
                         }
-                    case BEGIN_GAME_INTENT:
+                    case Constants.INTENT_CUSTOM_BEGIN_GAME_INTENT:
                         {
                             MagicNumberGenerator generator = new MagicNumberGenerator(bounds.Low, bounds.High);
                             var response = new BeginGameIntent(context, generator).Process();
                             return response;
                         }
-                    case ANSWER_INTENT:
+                    case Constants.INTENT_CUSTOM_ANSWER_INTENT:
                         {
                             var response = new AnswerIntent(context, bounds).Process();
+                            return response;
+                        }
+                    case Constants.INTENT_CUSTOM_LEADERBOARD_INTENT:
+                        {
+                            var response = new LeaderBoardIntent(context).Process();
                             return response;
                         }
                     default:

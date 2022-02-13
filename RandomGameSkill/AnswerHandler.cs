@@ -1,9 +1,11 @@
 ﻿using Alexa.NET;
 using Alexa.NET.APL;
 using Alexa.NET.APL.DataSources;
+using Alexa.NET.APL.Operation;
 using Alexa.NET.Request;
 using Alexa.NET.Response;
 using Amazon.Lambda.Core;
+using RandomGameSkill.Repositories;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -26,22 +28,23 @@ namespace RandomGameSkill
         private readonly ILambdaLogger logger;
         private readonly bool isAPLSupported;
         private readonly Bounds bounds;
+        private readonly LeaderBoardRepo repo;
         private Session session;
         private int wowThreshold;
-        const string ANSWER_DOC = "doc://alexa/apl/documents/answerdocument.json";
-        const string ANSWER_DOC_TOKEN = "answerdoctoken";
-
+   
         public AnswerHandler(Session session, 
             AnswerDataModel model,
             ILambdaLogger logger,
             bool isAPLSupported,
             Bounds bounds,
+            LeaderBoardRepo repo,
             int wowThreshold = 3)
         {
             this.model = model;
             this.logger = logger;
             this.isAPLSupported = isAPLSupported;
             this.bounds = bounds;
+            this.repo = repo;
             this.session = session;
             this.wowThreshold = wowThreshold;
         }        
@@ -54,39 +57,35 @@ namespace RandomGameSkill
             return guesses;
         }
       
-        private void TryAddAPL(SkillResponse response)
+        private void TryAddAPLDirective(SkillResponse response)
         {
             if (isAPLSupported)
             {
-                var launchDirective =
-                    new RenderDocumentDirective(new APLDocumentLink(ANSWER_DOC));
-                launchDirective.Token = ANSWER_DOC_TOKEN;
-                launchDirective.DataSources = new Dictionary<string, APLDataSource>()
-                                {
-                                    {
-                                        "gridListData",
-                                         new KeyValueDataSource
-                                        {
-                                            Properties = new Dictionary<string, object>()
-                                            {
-                                                {
-                                                    "listItemsToShow",
-                                                    Enumerable.Range(bounds.Low, bounds.High)
-                                                    .Select(item =>
-                                                     new 
-                                                     { 
-                                                         listItemText = item, 
-                                                         disabled = Array.Find(model.AllGuesses, i => i == item) != 0
-                                                     })
-                                                    .ToArray()
-                                                }
-                                            }
+                int listVersion = 0;
+                session.TryGetValue(Constants.LABEL_LIST_VER, out listVersion);
+                listVersion += 1;
+                session.SetValue(Constants.LABEL_LIST_VER, listVersion);
+                var updateListDataDirective = new UpdateIndexListDataDirective
+                {
+                    ListId = Constants.DYNAMIC_INDEX_LIST_ID,
+                    Token = Constants.ANSWER_DOC_TOKEN,
+                    ListVersion = listVersion,
+                    Operations = new List<Operation>
+                     {
+                         new SetItem
+                            {
+                             Index = model.CurrentGuess,
+                             Item = new {
+                                            listItemText = model.CurrentGuess,
+                                            disabled = model.CurrentGuess != model.MagicNumber
                                         }
-                                    }
-                                };
-                response.Response.Directives.Add(launchDirective);
+                             }
+                     }
+                };
+                response.Response.Directives.Add(updateListDataDirective);
             }
         }
+      
         internal SkillResponse Handle()
         {
             logger?.LogLine($"Entered {nameof(AnswerHandler.Handle)}:");
@@ -99,15 +98,17 @@ namespace RandomGameSkill
             {
                 if (numTries < wowThreshold)
                 {
-                    speech = $"Correct! Wow, you guessed it in {numTries} tries! That is amazing! Say new game to play again, or stop to exit. ";
+                    string triesMessage = numTries == 1 ? "try" : "tries";
+                    speech = $"Correct! Wow, you guessed it in {numTries} {triesMessage}.Amazing! Say new game to play again, or stop to exit. ";
                 }
                 else
                 {
                     speech = $"Correct! You guessed it in {numTries} tries. Say new game to play again, or stop to exit. ";
                 }
-                session.SetValue("num_guesses", 0);
+                session.SetValue(Constants.SESSION_VAR_NUM_GUESSES, 0);
                 Reprompt rp = new Reprompt(speech);
                 response = ResponseBuilder.Ask(speech, rp, session);
+                repo.WriteToLeaderboard(model.UserName, numTries);
                 //WriteToLeaderboard(
                 //   session.Attributes["username"] as string,
                 //   numTries,
@@ -118,11 +119,11 @@ namespace RandomGameSkill
             {
                 speech = "Nope, guess again.";
                 model.AllGuesses = AddGuess(model.AllGuesses, model.CurrentGuess);
-                session.SetValue("all_guesses", string.Join(",", model.AllGuesses));
-                session.SetValue("num_guesses", numTries);
+                session.SetValue(Constants.SESSION_VAR_ALL_GUESSES, string.Join(",", model.AllGuesses));
+                session.SetValue(Constants.SESSION_VAR_NUM_GUESSES, numTries);
                 Reprompt rp = new Reprompt(speech);
                 response = ResponseBuilder.Ask(speech, rp, session);
-                TryAddAPL(response);
+                TryAddAPLDirective(response);
             }           
             logger?.LogLine($"Exiting {nameof(AnswerHandler.Handle)}");
             return response;

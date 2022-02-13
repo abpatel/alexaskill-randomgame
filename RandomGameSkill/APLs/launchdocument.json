@@ -12,6 +12,42 @@
   ],
   "resources": [],
   "styles": {
+    "smallText": {
+      "values": [
+        {
+          "fontSize": "50dp",
+          "color": "white",
+          "textAlign": "center"
+        }
+      ]
+    },
+    "mediumText": {
+      "values": [
+        {
+          "fontSize": "80dp",
+          "color": "white",
+          "textAlign": "center"
+        }
+      ]
+    },
+    "largeText": {
+      "values": [
+        {
+          "fontSize": "120dp",
+          "color": "white",
+          "textAlign": "center"
+        }
+      ]
+    },
+    "XLargeText": {
+      "values": [
+        {
+          "fontSize": "100dp",
+          "color": "white",
+          "textAlign": "center"
+        }
+      ]
+    },
     "bigText": {
       "values": [
         {
@@ -42,6 +78,10 @@
           "type": "string"
         },
         {
+          "name": "styleName",
+          "type": "string"
+        },
+        {
           "name": "topId",
           "type": "string",
           "default": "textTop"
@@ -63,20 +103,20 @@
           "items": [
             {
               "type": "Text",
-              "style": "bigText",
+              "style": "${styleName}",
               "paddingTop": "${@viewportProfile == @hubRoundSmall ? 75dp : 0dp}",
               "text": "${startText}",
               "id": "${topId}"
             },
             {
               "type": "Text",
-              "style": "bigText",
+              "style": "${styleName}",
               "text": "${middleText}",
               "id": "${middleId}"
             },
             {
               "type": "Text",
-              "style": "bigText",
+              "style": "${styleName}",
               "text": "${endText}",
               "id": "${bottomId}"
             }
@@ -97,12 +137,13 @@
             "type": "numberGameText",
             "startText": "${textToSet.start}",
             "middleText": "${textToSet.middle}",
-            "endText": "${textToSet.end}"
+            "endText": "${textToSet.end}",
+            "styleName": "bigText"
           }
         ],
-        "height": "100%",
-        "width": "100%",
-        "when": "${@viewportProfile != @hubRoundSmall}"
+        "width": "200vh",
+        "paddingTop": "70dp",
+        "when": "${@viewportProfile == @hubLandscapeSmall}"
       },
       {
         "type": "Container",
@@ -111,7 +152,96 @@
             "type": "numberGameText",
             "startText": "${textToSet.start}",
             "middleText": "${textToSet.middle}",
-            "endText": "${textToSet.end}"
+            "endText": "${textToSet.end}",
+            "styleName": "mediumText"
+          }
+        ],
+        "width": "170vh",
+        "paddingTop": "150dp",
+        "when": "${@viewportProfile == @hubLandscapeMedium}"
+      },
+      {
+        "type": "Container",
+        "items": [
+          {
+            "type": "numberGameText",
+            "startText": "${textToSet.start}",
+            "middleText": "${textToSet.middle}",
+            "endText": "${textToSet.end}",
+            "styleName": "largeText"
+          }
+        ],
+        "width": "170vh",
+        "height": "200vh",
+        "paddingTop": "150dp",
+        "when": "${@viewportProfile == @hubLandscapeLarge}"
+      },
+      {
+        "type": "Container",
+        "items": [
+          {
+            "type": "numberGameText",
+            "startText": "${textToSet.start}",
+            "middleText": "${textToSet.middle}",
+            "endText": "${textToSet.end}",
+            "styleName": "XLargeText"
+          }
+        ],
+        "width": "170vh",
+        "paddingTop": "150dp",
+        "when": "${@viewportProfile == @hubLandscapeXLarge}"
+      },
+      {
+        "type": "Container",
+        "items": [
+          {
+            "type": "numberGameText",
+            "startText": "${textToSet.start}",
+            "middleText": "${textToSet.middle}",
+            "endText": "${textToSet.end}",
+            "styleName": "smallText"
+          }
+        ],
+        "when": "${@viewportProfile == @hubPortraitMedium}"
+      },
+      {
+        "type": "Container",
+        "items": [
+          {
+            "type": "numberGameText",
+            "startText": "${textToSet.start}",
+            "middleText": "${textToSet.middle}",
+            "endText": "${textToSet.end}",
+            "styleName": "XLargeText"
+          }
+        ],
+        "width": "170vh",
+        "height": "200vh",
+        "paddingTop": "50dp",
+        "when": "${@viewportProfile == @tvLandscapeXLarge}"
+      },
+      {
+        "type": "Container",
+        "items": [
+          {
+            "type": "numberGameText",
+            "startText": "${textToSet.start}",
+            "middleText": "${textToSet.middle}",
+            "endText": "${textToSet.end}",
+            "styleName": "smallText"
+          }
+        ],
+        "when": "${@viewportProfile == @mobileSmall}"
+      },
+      {
+        "type": "Container",
+        "items": [
+          {
+            "type": "numberGameText",
+            "startText": "${textToSet.start}",
+            "middleText": "${textToSet.middle}",
+            "endText": "${textToSet.end}",
+            "styleName": "bigText"
           }
         ],
         "height": "100%",

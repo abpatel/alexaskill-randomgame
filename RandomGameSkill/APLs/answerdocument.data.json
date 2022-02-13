@@ -2,30 +2,30 @@
   "gridListData": {
     "headerAttributionImage": "https://s3.amazonaws.com/ask-skills-assets/apl-layout-assets/attribution_dark_hub_prime.png",
     "backgroundImageSource": "https://d2o906d8ln7ui1.cloudfront.net/images/BT6_Background.png",
-    "listItemsToShow": [
+    "type": "dynamicIndexList",
+    "listId": "numbersDynamicList",
+    "startIndex": 0,
+    "minimumInclusiveIndex": 0,
+    "maximumExclusiveIndex": 11,
+    "items": [
       {
         "listItemText": "1",
-        "imageUrl": "https://d2o906d8ln7ui1.cloudfront.net/images/md_gruyere.png",
         "disabled": false
       },
       {
         "listItemText": "2",
-        "imageUrl": "https://d2o906d8ln7ui1.cloudfront.net/images/md_gorgonzola.png",
         "disabled": true
       },
       {
         "listItemText": "3",
-        "imageUrl": "https://d2o906d8ln7ui1.cloudfront.net/images/tl_brie.png",
         "disabled": false
       },
       {
         "listItemText": "4",
-        "imageUrl": "https://d2o906d8ln7ui1.cloudfront.net/images/MollyforBT7.png",
         "disabled": false
       },
       {
         "listItemText": "5",
-        "imageUrl": "https://d2o906d8ln7ui1.cloudfront.net/images/sm_blue.png",
         "disabled": true
       },
       {

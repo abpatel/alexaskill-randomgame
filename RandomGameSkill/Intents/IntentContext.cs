@@ -1,6 +1,7 @@
 ﻿using Alexa.NET.Request;
 using Alexa.NET.Request.Type;
 using Amazon.Lambda.Core;
+using RandomGameSkill.Repositories;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -13,5 +14,6 @@ namespace RandomGameSkill.Intents
         public IntentRequest Request { get; internal set; }
         public ILambdaLogger Logger { get; internal set; }
         public bool IsAPLSupported {get; internal set;}
+        internal LeaderBoardRepo LeaderBoardRepo { get; set; }
     }
 }

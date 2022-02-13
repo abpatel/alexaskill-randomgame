@@ -5,7 +5,9 @@ VisualStudioVersion = 16.0.30114.105
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RandomGameSkill", "RandomGameSkill\RandomGameSkill.csproj", "{1D37992F-4938-4DFB-905D-77F211B3A0FF}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RandomGame.Tests", "RandomGameSkill.Tests\RandomGameSkill.Tests.csproj", "{7389BEC8-5B32-4CB0-8190-BAB65368433F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RandomGameSkill.Tests", "RandomGameSkill.Tests\RandomGameSkill.Tests.csproj", "{7389BEC8-5B32-4CB0-8190-BAB65368433F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RandomeGameSkill.LeaderBoardSeeder", "RandomeGameSkill.LeaderBoardSeeder\RandomeGameSkill.LeaderBoardSeeder.csproj", "{8723BB54-B00B-4A4F-A42C-6F19237BE5E7}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,6 +23,10 @@ Global
 		{7389BEC8-5B32-4CB0-8190-BAB65368433F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{7389BEC8-5B32-4CB0-8190-BAB65368433F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{7389BEC8-5B32-4CB0-8190-BAB65368433F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8723BB54-B00B-4A4F-A42C-6F19237BE5E7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8723BB54-B00B-4A4F-A42C-6F19237BE5E7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8723BB54-B00B-4A4F-A42C-6F19237BE5E7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8723BB54-B00B-4A4F-A42C-6F19237BE5E7}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

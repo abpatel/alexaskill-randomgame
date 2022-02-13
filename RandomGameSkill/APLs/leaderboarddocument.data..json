@@ -1,0 +1,37 @@
+﻿{
+  "listData": {
+    "headerTitle": "Header title",
+    "headerSubtitle": "",
+    "headerAttributionImage": "",
+    "backgroundImageSource": "",
+    "defaultImageSource": "",
+    "hintText": "Footer hint text",
+    "listItemsToShow": [
+      {
+        "primaryText": "Jon",
+        "secondaryText": "1 try"
+      },
+      {
+        "primaryText": "Jack",
+        "secondaryText": "2 tries",
+        "tertiaryText": ""
+      },
+      {
+        "primaryText": "Maya",
+        "secondaryText": "4 tries"
+      },
+      {
+        "primaryText": "Jim",
+        "secondaryText": "6 tries"
+      },
+      {
+        "primaryText": "Matt",
+        "secondaryText": "8 tries"
+      },
+      {
+        "primaryText": "Joe",
+        "secondaryText": "9 tries"
+      }
+    ]
+  }
+}
