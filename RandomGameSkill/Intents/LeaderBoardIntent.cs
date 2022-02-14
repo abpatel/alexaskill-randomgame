@@ -42,7 +42,15 @@ namespace RandomGameSkill.Intents
             }
             sb.AppendLine(@"</amazon:emotion>");
             sb.AppendLine(@" <break time=""3s""/>");
-            sb.AppendLine(@"Say new game to begin a new game or stop to exit");
+            context.Session.TryGetValue(Constants.SESSION_VAR_USERNAME, out string userName);
+            if (string.IsNullOrEmpty(userName))
+            {
+                sb.AppendLine(@"Say new game to begin a new game, or stop to exit");
+            }
+            else
+            {
+                sb.AppendLine(@"Say play again, or stop to exit");
+            }
             sb.AppendLine(@"</speak>");
             return new SsmlOutputSpeech(sb.ToString());
         }

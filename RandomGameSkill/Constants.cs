@@ -21,6 +21,7 @@ namespace RandomGameSkill
         public const string INTENT_AMAZON_STOPINTENT = "AMAZON.StopIntent";
         public const string INTENT_AMAZON_HELPINTENT = "AMAZON.HelpIntent";
         public const string INTENT_CUSTOM_NEW_GAME_INTENT = "NewGameIntent";
+        public const string INTENT_CUSTOM_PLAY_AGAIN_INTENT = "PlayAgainIntent";
         public const string INTENT_CUSTOM_BEGIN_GAME_INTENT = "BeginGameIntent";
         public const string INTENT_CUSTOM_ANSWER_INTENT = "AnswerIntent";
         public const string INTENT_CUSTOM_LEADERBOARD_INTENT = "LeaderBoardIntent";

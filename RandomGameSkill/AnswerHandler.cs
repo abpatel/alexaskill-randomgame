@@ -144,11 +144,11 @@ namespace RandomGameSkill
                 {
                     string triesMessage = numTries == 1 ? "try" : "tries";
                     speech = @$"Correct! Wow, you guessed it in {numTries} {triesMessage}.  
-                                Say new game to play again, or stop to exit. ";
+                                You can say play again, or leaderboard to view the leaderboard, or stop to exit. ";
                 }
                 else
                 {
-                    speech = $"Correct! You guessed it in {numTries} tries. Say new game to play again, or stop to exit. ";
+                    speech = $"Correct! You guessed it in {numTries} tries. You can say play again, or leaderboard to view the leaderboard, or stop to exit. ";
                 }
                 session.SetValue(Constants.SESSION_VAR_NUM_GUESSES, 0);
                 Reprompt rp = new Reprompt(speech);

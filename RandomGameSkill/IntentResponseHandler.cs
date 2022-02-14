@@ -66,6 +66,12 @@ namespace RandomGameSkill
                             var response = new NewGameIntent(context).Process();
                             return response;
                         }
+                    case Constants.INTENT_CUSTOM_PLAY_AGAIN_INTENT:
+                        {
+                            MagicNumberGenerator generator = new MagicNumberGenerator(bounds.Low, bounds.High);
+                            var response = new PlayAgainIntent(context, generator).Process();
+                            return response;
+                        }
                     case Constants.INTENT_CUSTOM_BEGIN_GAME_INTENT:
                         {
                             MagicNumberGenerator generator = new MagicNumberGenerator(bounds.Low, bounds.High);

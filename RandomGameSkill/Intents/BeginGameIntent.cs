@@ -61,7 +61,10 @@ namespace RandomGameSkill.Intents
         public SkillResponse Process()
         {
             context.Logger?.LogLine($"Entered {nameof(BeginGameIntent)}:");
-            string userName = context.Request.Intent.Slots[Constants.INTENT_SLOT_USERNAME].Value;
+            string userName = string.Empty;
+            context.Session.TryGetValue(Constants.SESSION_VAR_USERNAME, out userName);
+            userName = string.IsNullOrEmpty(userName) ? 
+                context.Request.Intent.Slots[Constants.INTENT_SLOT_USERNAME].Value : userName;
             AddSessionVariable(Constants.SESSION_VAR_USERNAME, userName);
             AddSessionVariable(Constants.SESSION_VAR_NUM_GUESSES, 0);
             AddSessionVariable(Constants.LABEL_LIST_VER, 0);
