@@ -1,68 +1,78 @@
 {
-    "type": "APL",
-    "version": "1.9",
-    "theme": "dark",
-    "import": [
-        {
-            "name": "alexa-layouts",
-            "version": "1.5.0"
-        },
-        {
-            "name": "alexa-styles",
-            "version": "1.4.0"
-        }
-    ],
-    "mainTemplate": {
-        "parameters": [
-            "gridListData"
-        ],
-        "items": [
-            {
-                "type": "AlexaGridList",
-                "headerTitle": "Guess a number",
-                "headerAttributionImage": "${gridListData.headerAttributionImage}",
-                "backgroundImageSource": "${gridListData.backgroundImageSource}",
-                "listItems": "${gridListData.listItemsToShow}",
-                "listItemHeight": "250dp",
-                "imageAlignment": "center",
-                "customLayoutName": "MyListItem"
-            }
-        ]
+  "type": "APL",
+  "version": "1.9",
+  "theme": "dark",
+  "import": [
+    {
+      "name": "alexa-layouts",
+      "version": "1.5.0"
     },
-    "layouts": {
-        "MyListItem": {
-            "items": [
-                {
-                    "type": "TouchWrapper",
-                    "disabled": "${data.disabled}",
-                    "onPress": [
-                        {
-                            "type": "SendEvent",
-                            "arguments": [
-                                "ItemSelected",
-                                "${ordinal}",
-                                "${data.listItemText}"
-                            ]
-                        }
-                    ],
-                    "items": [
-                        {
-                            "type": "Frame",
-                            "item": {
-                                "fontFamily": "@fontFamilyRomanSans",
-                                "fontWeight": "@fontWeightMedium",
-                                "fontSize": "@fontSize5XLarge",
-                                "lineHeight": "@lineHeightExpanded",
-                                "letterSpacing": "@letterSpacingNormal",
-                                "text": "${data.listItemText}",
-                                "paddingLeft": "150",
-                                "type": "Text",
-                                "opacity": "${data.disabled ? 0.3 : 1}"
-                            }
-                        }
-                    ]
-                }
-            ]
-        }
+    {
+      "name": "alexa-styles",
+      "version": "1.4.0"
     }
+  ],
+  "mainTemplate": {
+    "parameters": [
+      "gridListData"
+    ],
+    "items": [
+      {
+        "type": "AlexaGridList",
+        "headerTitle": "Guess a number",
+        "headerAttributionImage": "${gridListData.headerAttributionImage}",
+        "backgroundImageSource": "${gridListData.backgroundImageSource}",
+        "listItems": "${gridListData}",
+        "listItemHeight": "250dp",
+        "imageAlignment": "center",
+        "customLayoutName": "MyListItem"
+      }
+    ]
+  },
+  "layouts": {
+    "MyListItem": {
+      "items": [
+        {
+          "type": "Container",
+          "height": "100vh",
+          "width": "100vw",
+          "numbered": true,
+          "direction": "column",
+          "items": [
+            {
+              "type": "TouchWrapper",
+              "disabled": "${data.disabled}",
+              "onPress": [
+                {
+                  "type": "SendEvent",
+                  "arguments": [
+                    "ItemSelected",
+                    "${ordinal}",
+                    "${data.listItemText}"
+                  ]
+                }
+              ],
+              "items": [
+                {
+                  "type": "Frame",
+                  "item": {
+                    "fontFamily": "@fontFamilyRomanSans",
+                    "fontWeight": "@fontWeightMedium",
+                    "fontSize": "@fontSize5XLarge",
+                    "lineHeight": "@lineHeightExpanded",
+                    "letterSpacing": "@letterSpacingNormal",
+                    "text": "${data.listItemText}",
+                    "paddingLeft": "150",
+                    "type": "Text",
+                    "opacity": "${data.disabled ? 0.3 : 1}",
+                    "color": "${data.correctGuess ? 'green' : 'white'}"
+                  }
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  }
 }

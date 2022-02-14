@@ -64,6 +64,7 @@ namespace RandomGameSkill.Intents
             string userName = context.Request.Intent.Slots[Constants.INTENT_SLOT_USERNAME].Value;
             AddSessionVariable(Constants.SESSION_VAR_USERNAME, userName);
             AddSessionVariable(Constants.SESSION_VAR_NUM_GUESSES, 0);
+            AddSessionVariable(Constants.LABEL_LIST_VER, 0);
             AddSessionVariable(Constants.SESSION_VAR_ALL_GUESSES, "");
             int magicNumber = generator.Generate();
             AddSessionVariable(Constants.SESSION_VAR_MAGIC_NUMBER, magicNumber);

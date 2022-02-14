@@ -42,7 +42,7 @@ namespace RandomGameSkill.Repositories
             return leaderBoardDatas.ToArray();
         }
      
-        private async Task WriteToLeaderboardAsync(string userName, int numTries)
+        internal async Task WriteToLeaderboardAsync(string userName, int numTries)
         {
             try
             {

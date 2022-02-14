@@ -24,20 +24,27 @@ namespace RandomGameSkill.Intents
             this.context = context;
         }
 
-        private string GenerateSpeechText(LeaderBoardData[] leaderBoardDatas)
+        private SsmlOutputSpeech GenerateSpeechText(LeaderBoardData[] leaderBoardDatas)
         {
+            
             if(leaderBoardDatas.Length == 0)
             {
-                return "The leaderboard is empty, say new game to begin a new game or stop to exit";
+                return new SsmlOutputSpeech("The leaderboard is empty.Say new game to begin a new game or stop to exit");
             }
             StringBuilder sb = new StringBuilder();
-            sb.AppendLine("<p>Here are some of the top scores.</p>");
+            sb.AppendLine(@"<speak>");
+            sb.AppendLine(@" <amazon:emotion name=""excited"" intensity=""medium"">");
+            sb.AppendLine("Here are some of the top scores.");
             foreach (var leaderBoardData in leaderBoardDatas.Take(5))
             {
-                sb.AppendLine($"<p>{leaderBoardData.UserName} took {leaderBoardData.Score} {(leaderBoardData.Score == 1?"try":"tries")}.</p>");
-                sb.AppendLine();
-            }            
-            return sb.ToString();
+                sb.AppendLine($"{leaderBoardData.UserName}  {leaderBoardData.Score} {(leaderBoardData.Score == 1?"try":"tries")}.");
+                sb.AppendLine(@" <break time=""0.5s""/>");
+            }
+            sb.AppendLine(@"</amazon:emotion>");
+            sb.AppendLine(@" <break time=""3s""/>");
+            sb.AppendLine(@"Say new game to begin a new game or stop to exit");
+            sb.AppendLine(@"</speak>");
+            return new SsmlOutputSpeech(sb.ToString());
         }
 
         private APLDataSource CreateDataSource(LeaderBoardData[] leaderBoardDatas)
@@ -53,7 +60,7 @@ namespace RandomGameSkill.Intents
                                                      new
                                                      {
                                                          primaryText = item.UserName,
-                                                         secondaryText = item.Score
+                                                         secondaryText = $"{item.Score} {(item.Score == 1 ? " try":" tries")}"
                                                      }).ToArray()
                                                 }
                                             }
@@ -65,8 +72,8 @@ namespace RandomGameSkill.Intents
         {
             context.Logger?.LogLine($"Entered {nameof(LeaderBoardIntent.Process)}:");
             var leaderBoardDatas = context.LeaderBoardRepo.GetHighScores(numEntriesToReturn);
-            string speech = GenerateSpeechText(leaderBoardDatas);
-            Reprompt rp = new Reprompt(speech);
+            var speech = GenerateSpeechText(leaderBoardDatas);
+            Reprompt rp = new Reprompt("Say new game to begin a new game or stop to exit");
             var response = ResponseBuilder.Ask(speech, rp, context.Session);
             if (context.IsAPLSupported)
             {

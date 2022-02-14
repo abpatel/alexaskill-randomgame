@@ -57,7 +57,7 @@ namespace RandomGameSkill
             return guesses;
         }
       
-        private void TryAddAPLDirective(SkillResponse response)
+        private void TryAddAPLDirectiveOnWrongGuess(SkillResponse response)
         {
             if (isAPLSupported)
             {
@@ -85,21 +85,66 @@ namespace RandomGameSkill
                 response.Response.Directives.Add(updateListDataDirective);
             }
         }
-      
+
+        private void TryAddAPLDirectiveOnCorrectGuess(SkillResponse response)
+        {
+            if (isAPLSupported)
+            {
+                int listVersion = 0;
+                session.TryGetValue(Constants.LABEL_LIST_VER, out listVersion);
+                listVersion += 1;
+                session.SetValue(Constants.LABEL_LIST_VER, listVersion);
+                var updateListDataDirective = new UpdateIndexListDataDirective
+                {
+                    ListId = Constants.DYNAMIC_INDEX_LIST_ID,
+                    Token = Constants.ANSWER_DOC_TOKEN,
+                    ListVersion = listVersion,
+                    Operations =
+                    //new List<Operation>
+                    //{
+                    //    new SetItem
+                    //    {
+                    //        Index = model.CurrentGuess,
+                    //        Item = new
+                    //        {
+                    //            listItemText = model.CurrentGuess,
+                    //            disabled = true,
+                    //            correctGuess = (model.CurrentGuess == model.MagicNumber)
+                    //        }
+                    //    }
+
+                    //}
+                    Enumerable.Range(bounds.Low, bounds.High).Except(model.AllGuesses)
+                    .Select(i => new SetItem
+                    {
+                        Index = i,
+                        Item = new
+                        {
+                            listItemText = i,
+                            disabled = true,
+                            correctGuess = (model.CurrentGuess == model.MagicNumber && i == model.MagicNumber)
+                        }
+                    }).OfType<Operation>().ToList()
+
+                };
+                response.Response.Directives.Add(updateListDataDirective);
+            }
+        }
+
         internal SkillResponse Handle()
         {
             logger?.LogLine($"Entered {nameof(AnswerHandler.Handle)}:");
-
-            int magicNumber = model.MagicNumber;
+            SsmlOutputSpeech ssmlSpeech;
             int numTries = model.NumGuesses + 1;
-            string speech = "";
+            string speech = string.Empty;
             SkillResponse response;
-            if (magicNumber == model.CurrentGuess)
+            if (model.MagicNumber == model.CurrentGuess)
             {
                 if (numTries < wowThreshold)
                 {
                     string triesMessage = numTries == 1 ? "try" : "tries";
-                    speech = $"Correct! Wow, you guessed it in {numTries} {triesMessage}.Amazing! Say new game to play again, or stop to exit. ";
+                    speech = @$"Correct! Wow, you guessed it in {numTries} {triesMessage}.  
+                                Say new game to play again, or stop to exit. ";
                 }
                 else
                 {
@@ -108,22 +153,39 @@ namespace RandomGameSkill
                 session.SetValue(Constants.SESSION_VAR_NUM_GUESSES, 0);
                 Reprompt rp = new Reprompt(speech);
                 response = ResponseBuilder.Ask(speech, rp, session);
+                TryAddAPLDirectiveOnCorrectGuess(response);
                 repo.WriteToLeaderboard(model.UserName, numTries);
-                //WriteToLeaderboard(
-                //   session.Attributes["username"] as string,
-                //   numTries,
-                //   logger
-                //   );
+                /*if (numTries < wowThreshold)
+                {
+                    StringBuilder sb = new StringBuilder(@"<speak><amazon:emotion name=""excited"" intensity=""medium"">");
+                    string triesMessage = numTries == 1 ? "try" : "tries";
+                    speech = $"Correct! Wow, you guessed it in {numTries} {triesMessage}.{Environment.NewLine}Amazing!";
+                    sb.AppendLine(speech);                   
+                    sb.AppendLine(@"</amazon:emotion>");
+                    sb.AppendLine(Constants.MSG_NEWGAME_AGAIN);
+                    sb.AppendLine(@"</speak>");
+                    ssmlSpeech = new SsmlOutputSpeech(sb.ToString());
+                }
+                else
+                {
+                    speech = $"<speak>Correct! You guessed it in {numTries} tries.</speak>";
+                    ssmlSpeech = new SsmlOutputSpeech(string.Concat(speech, Constants.MSG_NEWGAME_AGAIN));
+                }
+                session.SetValue(Constants.SESSION_VAR_NUM_GUESSES, 0);                
+                Reprompt rp = new Reprompt(Constants.MSG_NEWGAME_AGAIN);
+                response = ResponseBuilder.Ask(ssmlSpeech, rp, session);
+                repo.WriteToLeaderboard(model.UserName, numTries);
+                */
+                //TryAddAPLDirectiveOnCorrectGuess(response);
             }
             else
-            {
-                speech = "Nope, guess again.";
+            {               
                 model.AllGuesses = AddGuess(model.AllGuesses, model.CurrentGuess);
                 session.SetValue(Constants.SESSION_VAR_ALL_GUESSES, string.Join(",", model.AllGuesses));
                 session.SetValue(Constants.SESSION_VAR_NUM_GUESSES, numTries);
-                Reprompt rp = new Reprompt(speech);
-                response = ResponseBuilder.Ask(speech, rp, session);
-                TryAddAPLDirective(response);
+                Reprompt rp = new Reprompt(Constants.MSG_WRONG_GUESS);
+                response = ResponseBuilder.Ask(Constants.MSG_WRONG_GUESS, rp, session);
+                TryAddAPLDirectiveOnWrongGuess(response);
             }           
             logger?.LogLine($"Exiting {nameof(AnswerHandler.Handle)}");
             return response;

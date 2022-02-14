@@ -10,7 +10,8 @@
     "items": [
       {
         "listItemText": "1",
-        "disabled": false
+        "disabled": false,
+        "correctGuess": "true"
       },
       {
         "listItemText": "2",

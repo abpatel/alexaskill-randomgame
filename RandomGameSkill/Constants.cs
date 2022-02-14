@@ -33,5 +33,8 @@ namespace RandomGameSkill
         public const string INTENT_SLOT_NUMBER = "number";
         public const string INTENT_SLOT_USERNAME = "username";
 
+        public const string MSG_NEWGAME_AGAIN = "Say new game to play again, leaderboard to view top scores, or stop to exit.";
+        public const string MSG_WRONG_GUESS = "Nope, guess again.";
+
     }
 }
