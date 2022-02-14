@@ -29,7 +29,7 @@ namespace RandomGameSkill.Intents
             
             if(leaderBoardDatas.Length == 0)
             {
-                return new SsmlOutputSpeech("The leaderboard is empty.Say new game to begin a new game or stop to exit");
+                return new SsmlOutputSpeech("<speak>The leaderboard is empty. Say new game to begin a new game or stop to exit.</speak>");
             }
             StringBuilder sb = new StringBuilder();
             sb.AppendLine(@"<speak>");

@@ -1,0 +1,90 @@
+{
+    "interactionModel": {
+        "languageModel": {
+            "invocationName": "guessing game",
+            "intents": [
+                {
+                    "name": "AMAZON.CancelIntent",
+                    "samples": []
+                },
+                {
+                    "name": "AMAZON.HelpIntent",
+                    "samples": []
+                },
+                {
+                    "name": "AMAZON.StopIntent",
+                    "samples": []
+                },
+                {
+                    "name": "AMAZON.NavigateHomeIntent",
+                    "samples": []
+                },
+                {
+                    "name": "AMAZON.FallbackIntent",
+                    "samples": []
+                },
+                {
+                    "name": "NewGameIntent",
+                    "slots": [],
+                    "samples": [
+                        "start new game",
+                        "start game",
+                        "new game",
+                        "play a game",
+                        "start a new game",
+                        "start a game"
+                    ]
+                },
+                {
+                    "name": "BeginGameIntent",
+                    "slots": [
+                        {
+                            "name": "username",
+                            "type": "AMAZON.FirstName"
+                        }
+                    ],
+                    "samples": [
+                        "I go by {username}",
+                        "I am {username}",
+                        "I'm {username}",
+                        "My name is {username}"
+                    ]
+                },
+                {
+                    "name": "AnswerIntent",
+                    "slots": [
+                        {
+                            "name": "number",
+                            "type": "AMAZON.NUMBER"
+                        }
+                    ],
+                    "samples": [
+                        "{number}",
+                        "is it {number}"
+                    ]
+                },
+                {
+                    "name": "LeaderBoardIntent",
+                    "slots": [],
+                    "samples": [
+                        "LeaderBoard please",
+                        "Show me the LeaderBoard",
+                        "Show me LeaderBoard",
+                        "Show LeaderBoard",
+                        "LeaderBoard"
+                    ]
+                },
+                {
+                    "name": "PlayAgainIntent",
+                    "slots": [],
+                    "samples": [
+                        "play again",
+                        "I want to play again",
+                        "let's play again"
+                    ]
+                }
+            ],
+            "types": []
+        }
+    }
+}
