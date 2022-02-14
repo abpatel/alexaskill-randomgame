@@ -16,12 +16,13 @@ The Leaderboard feature uses DynamoDB as a backend.
 
 
 ## RandomGameSkill
-The .NET core lambda backend logic containing the APL for reference and 
-the DynamoDb backend schema for recreating the Leaderboard table
+The .NET core lambda backend logic containing the APL (for reference ), the skill JSON data model, 
+the DynamoDb backend logic and schema for recreating the Leaderboard table
 ## RandomGameSkill.LeaderBoardSeeder
 Console app to generate some seed data for the leaderboard
 
 ##Model
+The skill JSON model can be found under  RandomGameSkill\Models
 The following Intents are used in the model:
 
 ### NewGameIntent
