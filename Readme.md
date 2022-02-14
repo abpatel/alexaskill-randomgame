@@ -14,13 +14,49 @@ establishes a link between the skill frontend and backend.
 
 The Leaderboard feature uses DynamoDB as a backend.
 
-## Model
-Contains the Alexa "front end" model for this skill.
+
 ## RandomGameSkill
 The .NET core lambda backend logic containing the APL for reference and 
 the DynamoDb backend schema for recreating the Leaderboard table
 ## RandomGameSkill.LeaderBoardSeeder
 Console app to generate some seed data for the leaderboard
+
+##Model
+The following Intents are used in the model:
+
+**NewGameIntent**
+    - Sample Utterances
+        - start new game
+        - start game
+        - new game
+        - play a game
+        - start a new game
+
+**BeginGameIntent**
+   - slot name = username, slot type = AMAZON.FirstName
+   - Sample Utterances
+        - I go by {username}
+        - I am {username}
+        - I'm {username}
+        - My name is {username}
+
+**AnswerIntent**
+    - number, slot type = AMAZON.NUMBER
+   - Sample Utterances
+        - {number}
+        - is it {number}
+
+**LeaderboardIntent**
+     - Sample Utterances
+        - Leaderboard please
+        - Show me the Leaderboard
+        - Show me Leaderboard
+        - Leaderboard
+**PlayAgainIntent**
+     - Sample Utterances
+        - play again
+        - I want to play again
+        - let's play again
 
 **NOTE:** You will need to create a role (RandomGameLambdarole) in AWS IAM that contains the 
 following permissions:  
