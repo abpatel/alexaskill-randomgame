@@ -46,7 +46,7 @@ namespace RandomeGameSkill.LeaderBoardSeeder
         private static void SeedLeaderBoard()
         {
             const int numUsers = 20;
-            var userNames = GetRandomNames(numUsers);
+            var userNames = GetRandomNames(numUsers).Take(numUsers);
             //Change region as needed
             using (var client = new AmazonDynamoDBClient(RegionEndpoint.USWest2))
             {
@@ -55,7 +55,7 @@ namespace RandomeGameSkill.LeaderBoardSeeder
                     Table table = Table.LoadTable(client, "Leaderboard");
                     foreach (var userName in userNames)
                     {
-                        int score = random.Next(1, 9);
+                        int score = random.Next(3, 9);
                         var entry = new Document();
                         entry["Username"] = userName;
                         entry["Game"] = "Random Numbers Game";
