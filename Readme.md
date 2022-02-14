@@ -24,7 +24,7 @@ Console app to generate some seed data for the leaderboard
 ##Model
 The following Intents are used in the model:
 
-**NewGameIntent**
+###NewGameIntent###
     - Sample Utterances
         - start new game
         - start game
@@ -32,7 +32,7 @@ The following Intents are used in the model:
         - play a game
         - start a new game
 
-**BeginGameIntent**
+###BeginGameIntent###
    - slot name = username, slot type = AMAZON.FirstName
    - Sample Utterances
         - I go by {username}
@@ -40,19 +40,19 @@ The following Intents are used in the model:
         - I'm {username}
         - My name is {username}
 
-**AnswerIntent**
+###AnswerIntent###
     - number, slot type = AMAZON.NUMBER
    - Sample Utterances
         - {number}
         - is it {number}
 
-**LeaderboardIntent**
+###LeaderboardIntent###
      - Sample Utterances
         - Leaderboard please
         - Show me the Leaderboard
         - Show me Leaderboard
         - Leaderboard
-**PlayAgainIntent**
+###PlayAgainIntent###
      - Sample Utterances
         - play again
         - I want to play again
